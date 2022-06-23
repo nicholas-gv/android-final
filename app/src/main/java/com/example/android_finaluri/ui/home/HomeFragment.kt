@@ -56,7 +56,7 @@ class HomeFragment : Fragment() {
 
     private fun resetTimer() {
         stopTimer()
-        time = 1500000
+        time = 1500
         txtMinute.text = getMinutesString(time)
         txtSecond.text = getSecondsString(time)
     }
@@ -83,7 +83,7 @@ class HomeFragment : Fragment() {
 
     private val updateTime: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            time = intent.getLongExtra(CountDownService.TIME_EXTRA,1500000)
+            time = intent.getLongExtra(CountDownService.TIME_EXTRA,1500)
             txtMinute.text = getMinutesString(time)
             txtSecond.text = getSecondsString(time)
         }
