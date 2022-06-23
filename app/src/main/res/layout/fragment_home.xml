@@ -125,10 +125,10 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/startTimerButton"
+        android:id="@+id/timerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/dark_green"
+        android:background="@color/dark_red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
