@@ -11,7 +11,7 @@ Pomodoro Technique რეპლიკაცია
 * Settings
 
 **Retrofit** -  
-**Broadcast Receiver** -  
+**Broadcast Receiver** - გამოიძახება როდესაც TIMER_UPDATED action ვარდება  
 **Navigation Component** - Bottom Navigation კომპონენტი რომელიც 3 ფრაგმენტს მოიცავს  
 **View Pager** - გამოიყენება ინფორმაციის ფრაგმენტზე ინფორმაციის გამოსატანად  
 **Push Notification** - ნოტიფიკაციის გაფუშვა როდესაც დრო ამოიწურება  
