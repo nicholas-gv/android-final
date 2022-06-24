@@ -93,8 +93,12 @@ class HomeFragment : Fragment() {
     private val updateTime: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             time = intent.getLongExtra(CountDownService.TIME_EXTRA,1500)
-            txtMinute.text = getMinutesString(time)
-            txtSecond.text = getSecondsString(time)
+            if (time<0 && isAdded()) {
+                stopTimer()
+            } else {
+                txtMinute.text = getMinutesString(time)
+                txtSecond.text = getSecondsString(time)
+            }
         }
     }
 
@@ -109,7 +113,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun stringToMinute(minute: String): Long {
-        return minute.toLong() * 60 * 60
+        return minute.toLong()
     }
 
     override fun onDestroyView() {

@@ -22,11 +22,12 @@
         android:id="@+id/datarecord_record_work"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:inputType="number"
         android:ems="10"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.134"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="108dp"
         app:layout_constraintTop_toBottomOf="@+id/datarecord_name_work" />
 
     <Button
@@ -56,10 +57,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:inputType="number"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.134"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="236dp"
         app:layout_constraintTop_toBottomOf="@+id/datarecord_name_rest" />
 
     <Button
