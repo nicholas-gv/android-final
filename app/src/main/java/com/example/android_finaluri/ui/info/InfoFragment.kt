@@ -31,6 +31,10 @@ class InfoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        _binding = FragmentInfoBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+
+        val view_pager = binding.viewPager
         RestClient.initClient()
         RestClient.reqResApi.getInfo("info").enqueue(object:Callback<List<ApiData<FieldsProto<Info>>>>{
             override fun onResponse(
@@ -43,6 +47,8 @@ class InfoFragment : Fragment() {
                         textsList += (it.text2?.stringValue)
                         textsList += (it.text3?.stringValue)
                     }
+                    view_pager.adapter = ViewPagerAdapter(textsList)
+                    view_pager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
                 }
             }
 
@@ -53,13 +59,6 @@ class InfoFragment : Fragment() {
                 Log.d("error", t.message.toString())
             }
         })
-
-        _binding = FragmentInfoBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val view_pager = binding.viewPager
-        view_pager.adapter = ViewPagerAdapter(textsList)
-        view_pager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
         return root
     }
