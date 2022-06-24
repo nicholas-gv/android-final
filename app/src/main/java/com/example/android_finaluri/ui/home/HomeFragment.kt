@@ -117,6 +117,11 @@ class HomeFragment : Fragment() {
                     stopTimer()
                     serviceIntent.putExtra(CountDownService.TIME_EXTRA, restTime)
                     lastType = 2
+                    sendNotification(
+                        "Work Time is Up!",
+                        "You have completed one (more) pomodoro, timer is now " +
+                                "counting rest time"
+                    )
                     startTimer(restTime)
                 } else {
                     stopTimer()
