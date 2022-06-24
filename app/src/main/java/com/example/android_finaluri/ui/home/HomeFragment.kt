@@ -20,8 +20,11 @@ import kotlin.math.roundToInt
 import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
+import com.example.android_finaluri.ui.settings.SettingsViewModel
 
 class HomeFragment : Fragment() {
+
+    private lateinit var settingsViewModel: SettingsViewModel
 
     private var _binding: FragmentHomeBinding? = null
     private lateinit var timer: CountDownTimer
@@ -38,9 +41,15 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        val settingsViewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        settingsViewModel.getConfig("work_time").observe(viewLifecycleOwner) {
+            time = stringToMinute(it?.value ?: "25")
+        }
+
 
         txtMinute = binding.txtMinute
         txtSecond = binding.txtSecond
@@ -99,6 +108,9 @@ class HomeFragment : Fragment() {
         return seconds.toString()
     }
 
+    private fun stringToMinute(minute: String): Long {
+        return minute.toLong() * 60 * 60
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

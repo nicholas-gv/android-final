@@ -7,16 +7,70 @@
     tools:context=".ui.settings.SettingsFragment">
 
     <TextView
-        android:id="@+id/text_notifications"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/datarecord_name_work"
+        android:layout_width="200dp"
+        android:layout_marginTop="64dp"
+        android:layout_height="50dp"
+        android:text="Work time"
+        android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.127"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/datarecord_record_work"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.134"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="108dp"
+        app:layout_constraintTop_toBottomOf="@+id/datarecord_name_work" />
+
+    <Button
+        android:id="@+id/btnSave_work"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="292dp"
+        android:text="save"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="105dp"
+        app:layout_constraintTop_toBottomOf="@+id/datarecord_name_work" />
+
+    <TextView
+        android:id="@+id/datarecord_name_rest"
+        android:layout_width="200dp"
+        android:layout_marginTop="180dp"
+        android:text="Rest time"
+        android:layout_height="50dp"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.127"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/datarecord_record_rest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.134"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="236dp"
+        app:layout_constraintTop_toBottomOf="@+id/datarecord_name_rest" />
+
+    <Button
+        android:id="@+id/btnSave_rest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="292dp"
+        android:text="save"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="233dp"
+        app:layout_constraintTop_toBottomOf="@+id/datarecord_name_rest" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

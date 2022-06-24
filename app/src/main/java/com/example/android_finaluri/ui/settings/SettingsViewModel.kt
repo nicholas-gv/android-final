@@ -1,13 +1,25 @@
 package com.example.android_finaluri.ui.settings
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.apps.android.davaleba8.data.AppRoomDatabase
+import com.example.apps.android.davaleba8.data.DataRecord
+import com.example.apps.android.davaleba8.data.DataRecordRepository
+import kotlinx.coroutines.launch
 
-class SettingsViewModel : ViewModel() {
+class SettingsViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+    private val repository: DataRecordRepository
+
+    init {
+        val dao = AppRoomDatabase.getDatabase(application).datarecordDao()
+        repository = DataRecordRepository(dao)
     }
-    val text: LiveData<String> = _text
+
+    fun update(item: DataRecord) = viewModelScope.launch {
+        repository.update(item)
+    }
+
+    fun getConfig(name: String) = repository.getConfig(name)
 }
