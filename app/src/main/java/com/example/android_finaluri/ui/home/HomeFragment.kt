@@ -92,10 +92,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun startStopTimer(time: Long) {
-        if(timerStarted)
+        if(timerStarted) {
             stopTimer()
-        else
+            countPomodoros=0
+        } else {
             startTimer(time)
+        }
     }
 
     private fun startTimer(time: Long) {
@@ -161,7 +163,7 @@ class HomeFragment : Fragment() {
         val intent = Intent(requireContext(), MainActivity::class.java)
         val pendingIntent = TaskStackBuilder.create(requireContext()).run {
             addNextIntentWithParentStack(intent)
-            getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+            getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
         }
 
         val notification = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
