@@ -1,5 +1,7 @@
 package com.example.android_finaluri.ui.home
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -18,8 +20,12 @@ import com.example.android_finaluri.databinding.FragmentHomeBinding
 import kotlin.math.roundToInt
 
 import android.content.IntentFilter
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import com.example.android_finaluri.R
 import com.example.android_finaluri.ui.settings.SettingsViewModel
 
 class HomeFragment : Fragment() {
@@ -35,6 +41,9 @@ class HomeFragment : Fragment() {
     private lateinit var serviceIntent: Intent
     private var time: Long = 1500
     private val binding get() = _binding!!
+    private val CHANNEL_ID = "pomodoroID"
+    private val NOTIFICATION_ID = 42
+    private val CHANNEL_NAME = "pomodoroChannel"
 
     override fun onCreateView(inflater: LayoutInflater,
         container: ViewGroup?,
@@ -114,6 +123,30 @@ class HomeFragment : Fragment() {
 
     private fun stringToMinute(minute: String): Long {
         return minute.toLong()
+    }
+
+    private fun sendNotification(notificationContentTitle: String, notificationContentText: String){
+        createNotificationChannel()
+
+        val notification = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
+            .setContentTitle(notificationContentTitle)
+            .setContentText(notificationContentText)
+            .setSmallIcon(R.drawable.ic_baseline_star_24)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .build()
+
+        val notificationManager = NotificationManagerCompat.from(requireContext())
+        notificationManager.notify(NOTIFICATION_ID, notification)
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_DEFAULT)
+            val manager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE)
+                    as NotificationManager
+            manager.createNotificationChannel(channel)
+        }
     }
 
     override fun onDestroyView() {
