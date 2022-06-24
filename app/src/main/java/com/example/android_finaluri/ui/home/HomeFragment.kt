@@ -36,10 +36,10 @@ class HomeFragment : Fragment() {
     private lateinit var settingsViewModel: SettingsViewModel
 
     private var _binding: FragmentHomeBinding? = null
-    private lateinit var timer: CountDownTimer
     private lateinit var timerButton: Button
     private lateinit var txtMinute: TextView
     private lateinit var txtSecond: TextView
+    private lateinit var txtPomodoroScore: TextView
     private var timerStarted = false
     private lateinit var serviceIntent: Intent
     private var time: Long = 1500
@@ -50,6 +50,7 @@ class HomeFragment : Fragment() {
     private val NOTIFICATION_ID = 42
     private val CHANNEL_NAME = "pomodoroChannel"
     private var lastType: Int = 1
+    private var countPomodoros = 0
 
     override fun onCreateView(inflater: LayoutInflater,
         container: ViewGroup?,
@@ -72,6 +73,7 @@ class HomeFragment : Fragment() {
 
         txtMinute = binding.txtMinute
         txtSecond = binding.txtSecond
+        txtPomodoroScore = binding.pomodoroScoreTextView
         timerButton = binding.timerButton
 
         timerButton.setOnClickListener { startStopTimer(time) }
@@ -122,6 +124,8 @@ class HomeFragment : Fragment() {
                         "You have completed one (more) pomodoro, timer is now " +
                                 "counting rest time"
                     )
+                    countPomodoros++;
+                    txtPomodoroScore.text = countPomodoros.toString()
                     startTimer(restTime)
                 } else {
                     stopTimer()
