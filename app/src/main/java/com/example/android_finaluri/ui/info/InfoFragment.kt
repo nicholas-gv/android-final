@@ -1,6 +1,7 @@
 package com.example.android_finaluri.ui.info
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,23 +9,18 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.android_finaluri.ViewPagerAdapter
 import com.example.android_finaluri.databinding.FragmentInfoBinding
+import com.example.android_finaluri.retrofit.RestClient
+import com.example.android_finaluri.retrofit.dto.ApiData
+import com.example.android_finaluri.retrofit.dto.FieldsProto
+import com.example.android_finaluri.retrofit.dto.Info
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class InfoFragment : Fragment() {
 
     private var _binding: FragmentInfoBinding? = null
-    private val texts: List<String> = listOf(
-        "The Pomodoro Technique is a time management method developed by Francesco Cirillo in the" +
-                " late 1980s It uses a kitchen timer to break work into intervals, typically" +
-                " 25 minutes in length, separated by short breaks.",
-        "A goal of the technique is to reduce the effect of internal and external interruptions " +
-                "on focus and flow. The technique has been widely popularized by apps and " +
-                "websites providing timers and instructions.",
-        "It should be mentioned that specific cases can be handled with common sense: If you " +
-                "finish a task while the Pomodoro is still ticking, the following rule applies: " +
-                "If a Pomodoro begins, it has to ring. It’s a good idea to take advantage of the " +
-                "opportunity for over-learning, using the remaining portion of the Pomodoro to " +
-                "review or repeat what you’ve done, make small improvements, and note what you’ve" +
-                " learned until the Pomodoro rings.")
+    private var textsList: List<String?> = emptyList()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -35,12 +31,34 @@ class InfoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        RestClient.initClient()
+        RestClient.reqResApi.getInfo("info").enqueue(object:Callback<List<ApiData<FieldsProto<Info>>>>{
+            override fun onResponse(
+                call: Call<List<ApiData<FieldsProto<Info>>>>,
+                response: Response<List<ApiData<FieldsProto<Info>>>>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.first()?.fieldsProto?.let {
+                        textsList += (it.text1?.stringValue)
+                        textsList += (it.text2?.stringValue)
+                        textsList += (it.text3?.stringValue)
+                    }
+                }
+            }
+
+            override fun onFailure(
+                call: Call<List<ApiData<FieldsProto<Info>>>>,
+                t: Throwable
+            ) {
+                Log.d("error", t.message.toString())
+            }
+        })
 
         _binding = FragmentInfoBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val view_pager = binding.viewPager
-        view_pager.adapter = ViewPagerAdapter(texts)
+        view_pager.adapter = ViewPagerAdapter(textsList)
         view_pager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
         return root
