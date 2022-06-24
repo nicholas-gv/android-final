@@ -43,10 +43,13 @@ class HomeFragment : Fragment() {
     private var timerStarted = false
     private lateinit var serviceIntent: Intent
     private var time: Long = 1500
+    private var savedTime: Long = 1500
+    private var restTime: Long = 300
     private val binding get() = _binding!!
     private val CHANNEL_ID = "pomodoroID"
     private val NOTIFICATION_ID = 42
     private val CHANNEL_NAME = "pomodoroChannel"
+    private var lastType: Int = 1
 
     override fun onCreateView(inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,14 +63,18 @@ class HomeFragment : Fragment() {
 
         settingsViewModel.getConfig("work_time").observe(viewLifecycleOwner) {
             time = stringToMinute(it?.value ?: "25")
+            savedTime = stringToMinute(it?.value ?: "25")
         }
 
+        settingsViewModel.getConfig("rest_time").observe(viewLifecycleOwner) {
+            restTime = stringToMinute(it?.value ?: "5")
+        }
 
         txtMinute = binding.txtMinute
         txtSecond = binding.txtSecond
         timerButton = binding.timerButton
 
-        timerButton.setOnClickListener { startStopTimer() }
+        timerButton.setOnClickListener { startStopTimer(time) }
 
         serviceIntent = Intent(requireContext(), CountDownService::class.java)
         requireActivity().registerReceiver(updateTime, IntentFilter(CountDownService.TIMER_UPDATED))
@@ -82,14 +89,14 @@ class HomeFragment : Fragment() {
         txtSecond.text = getSecondsString(time)
     }
 
-    private fun startStopTimer() {
+    private fun startStopTimer(time: Long) {
         if(timerStarted)
             stopTimer()
         else
-            startTimer()
+            startTimer(time)
     }
 
-    private fun startTimer() {
+    private fun startTimer(time: Long) {
         serviceIntent.putExtra(CountDownService.TIME_EXTRA, time)
         requireActivity().startService(serviceIntent)
         timerButton.text = "Stop"
@@ -106,7 +113,17 @@ class HomeFragment : Fragment() {
         override fun onReceive(context: Context, intent: Intent) {
             time = intent.getLongExtra(CountDownService.TIME_EXTRA,1500)
             if (time<0 && isAdded()) {
-                stopTimer()
+                if (lastType == 1) {
+                    stopTimer()
+                    serviceIntent.putExtra(CountDownService.TIME_EXTRA, restTime)
+                    lastType = 2
+                    startTimer(restTime)
+                } else {
+                    stopTimer()
+                    serviceIntent.putExtra(CountDownService.TIME_EXTRA, savedTime)
+                    lastType = 1
+                    startTimer(savedTime)
+                }
             } else {
                 txtMinute.text = getMinutesString(time)
                 txtSecond.text = getSecondsString(time)
