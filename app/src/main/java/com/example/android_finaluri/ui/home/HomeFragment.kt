@@ -2,6 +2,8 @@ package com.example.android_finaluri.ui.home
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -25,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.example.android_finaluri.MainActivity
 import com.example.android_finaluri.R
 import com.example.android_finaluri.ui.settings.SettingsViewModel
 
@@ -126,13 +129,21 @@ class HomeFragment : Fragment() {
     }
 
     private fun sendNotification(notificationContentTitle: String, notificationContentText: String){
+
         createNotificationChannel()
+
+        val intent = Intent(requireContext(), MainActivity::class.java)
+        val pendingIntent = TaskStackBuilder.create(requireContext()).run {
+            addNextIntentWithParentStack(intent)
+            getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
 
         val notification = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
             .setContentTitle(notificationContentTitle)
             .setContentText(notificationContentText)
             .setSmallIcon(R.drawable.ic_baseline_star_24)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
             .build()
 
         val notificationManager = NotificationManagerCompat.from(requireContext())
