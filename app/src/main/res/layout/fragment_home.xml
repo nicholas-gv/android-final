@@ -14,21 +14,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
-        app:layout_constraintVertical_bias="0.8"
+        app:layout_constraintVertical_bias="0.65"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/pomodoroScoreLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Number of Pomodoros:" />
+            android:text="Number of Pomodoros:"
+            android:textSize="22sp"
+            android:textColor="@color/dark_green"/>
 
         <TextView
             android:id="@+id/pomodoroScoreTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="0000"/>
+            android:textColor="@color/dark_green"
+            android:textSize="22sp"
+            android:text="00"/>
     </LinearLayout>
 
 
@@ -61,7 +65,7 @@
                 android:layout_weight="1"
                 android:background="@color/dark_red"
                 android:gravity="center"
-                android:padding="5dp"
+                android:padding="15dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -96,7 +100,7 @@
                 android:layout_weight="1"
                 android:background="@color/dark_red"
                 android:gravity="center"
-                android:padding="5dp"
+                android:padding="15dp"
                 android:orientation="vertical">
 
                 <TextView
