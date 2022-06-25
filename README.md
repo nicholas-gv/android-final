@@ -10,7 +10,7 @@ Pomodoro Technique რეპლიკაცია
 * Info
 * Settings
 
-**Retrofit** -  
+**Retrofit** - Info ფრაგმენტზე არსებულ ინფორმაციას იღებს API-დან 
 **Broadcast Receiver** - გამოიძახება როდესაც TIMER_UPDATED action ვარდება  
 **Navigation Component** - Bottom Navigation კომპონენტი რომელიც 3 ფრაგმენტს მოიცავს  
 **View Pager** - გამოიყენება ინფორმაციის ფრაგმენტზე ინფორმაციის გამოსატანად  
